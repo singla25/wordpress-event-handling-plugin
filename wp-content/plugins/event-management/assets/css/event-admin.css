@@ -1,0 +1,42 @@
+.schedule-group {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background: #f9f9f9;
+}
+
+.group-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+#add-schedule-btn {
+    background-color: #177aa1;
+    color: white;
+    margin-top: 15px;
+}
+
+.schedule-group {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background: #f9f9f9;
+}
+
+.group-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+#add-schedule-btn {
+    background-color: #177aa1;
+    color: white;
+    margin-top: 15px;
+}
