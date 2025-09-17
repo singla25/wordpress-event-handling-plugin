@@ -27,7 +27,7 @@ class Event_Admin {
         );
 
         wp_localize_script('event-admin-js', 'eventAdminData', [
-            'minDate' => date('Y-m-d'),  // Today's date
+            'minDate' => date('Y-m-d'),
         ]);
     }
 
@@ -95,31 +95,40 @@ class Event_Admin {
 
             <input type="hidden" name="post_id" value="<?php echo esc_attr(get_the_ID()); ?>">
 
-            <div class="event-date-time-section">
-                <div class="form-group">
-                    <label for="event_description"><strong>Event Description</strong></label>
-                    <textarea name="event_description" id="event_description" rows="3" style="width: 100%;"><?php echo esc_textarea($event_description); ?></textarea>
-                </div>
+            <div class="form-group">
+                <label><strong>Event Description</strong></label>
+                <textarea name="event_description" id="event_description" rows="3" style="width: 100%;"><?php echo esc_textarea($event_description); ?></textarea>
+            </div>
 
-                <h2>Event Schedule</h2>
+            <h2>Event Schedule</h2>
 
-                <div id="event-schedule-container">
-                    <?php foreach ($event_schedules as $index => $schedule): ?>
-                        <div class="schedule-group bordered-box">
+            <div id="event-schedule-container">
+                <?php foreach ($event_schedules as $index => $schedule): ?>
+                    <div class="schedule-group bordered-box">
+                        <div class="group-row">
                             <label>Date:</label>
                             <input type="date" name="event_schedules[<?php echo $index; ?>][date]" value="<?php echo esc_attr($schedule['date']); ?>" min="<?php echo date('Y-m-d'); ?>" required>
 
-                            <div class="time-slots">
-                                <?php foreach ($schedule['slots'] as $slot_index => $slot): ?>
-                                    <div class="time-slot">
-                                        <input type="text" name="event_schedules[<?php echo $index; ?>][slots][]" value="<?php echo esc_attr($slot); ?>" placeholder="e.g., 10:00 AM - 12:00 PM" required>
-                                        <button type="button" class="remove-slot button">Remove</button>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
+                            <button type="button" class="remove-schedule button">❌ Remove Date</button>
                         </div>
-                    <?php endforeach; ?>
-                </div>
+
+                        <div class="time-slots">
+                            <?php
+                            $slots = isset($schedule['slots']) && is_array($schedule['slots']) ? $schedule['slots'] : [];
+                            foreach ($slots as $slot_index => $slot):
+                            ?>
+                                <div class="time-slot">
+                                    <input type="text" name="event_schedules[<?php echo $index; ?>][slots][<?php echo $slot_index; ?>][start_time]" value="<?php echo esc_attr($slot['start_time']); ?>" placeholder="Start Time" required>
+                                    <input type="text" name="event_schedules[<?php echo $index; ?>][slots][<?php echo $slot_index; ?>][end_time]" value="<?php echo esc_attr($slot['end_time']); ?>" placeholder="End Time" required>
+                                    <input type="number" min="1" name="event_schedules[<?php echo $index; ?>][slots][<?php echo $slot_index; ?>][persons]" value="<?php echo esc_attr($slot['persons']); ?>" placeholder="No. of Persons" required>
+                                    <button type="button" class="remove-slot button">❌ Remove Slot</button>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+
+                        <button type="button" class="add-time-slot-btn button">➕ Add Time Slot</button>
+                    </div>
+                <?php endforeach; ?>
             </div>
 
             <button type="button" id="add-schedule-btn" class="button">➕ Add New Date Schedule</button>
@@ -128,44 +137,61 @@ class Event_Admin {
     }
 
     public function save_event_meta($post_id) {
-        if (!isset($_POST['event_meta_nonce']) || !wp_verify_nonce($_POST['event_meta_nonce'], 'save_event_meta')) {
-            return;
-        }
+    // Verify nonce
+    if (!isset($_POST['event_meta_nonce']) || !wp_verify_nonce($_POST['event_meta_nonce'], 'save_event_meta')) {
+        return;
+    }
 
-        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    // Avoid autosave
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
 
-        // Save Event Description
-        if (isset($_POST['event_description'])) {
-            update_post_meta($post_id, 'event_description', sanitize_textarea_field($_POST['event_description']));
-        }
+    // Save Event Description
+    if (isset($_POST['event_description'])) {
+        // update_post_meta($post_id, 'event_description', sanitize_textarea_field($_POST['event_description']));
+    }
 
-        // Save Event Schedules
-        if (isset($_POST['event_schedules'])) {
-            $cleaned = [];
-            foreach ($_POST['event_schedules'] as $schedule) {
-                $date = sanitize_text_field($schedule['date']);
-                $slots_array = array_map('sanitize_text_field', (array) $schedule['slots']);
 
-                if ($date && !empty($slots_array)) {
-                    $cleaned[] = [
-                        'date'  => $date,
-                        'slots' => $slots_array,  // Store slots as array
+    echo "<pre>";
+    print_r($_POST);
+    die;
+
+    // Save Event Schedules
+    if (isset($_POST['event_schedules']) && is_array($_POST['event_schedules'])) {
+        $cleaned_schedules = [];
+
+        foreach ($_POST['event_schedules'] as $schedule_index => $schedule) {
+            $cleaned_slots = [];
+
+            if (isset($schedule['slots']) && is_array($schedule['slots'])) {
+                foreach ($schedule['slots'] as $slot_index => $slot) {
+                    $cleaned_slots[] = [
+                        'start_time' => sanitize_text_field($slot['start_time']),
+                        'end_time'   => sanitize_text_field($slot['end_time']),
+                        'persons'    => intval($slot['persons']),
                     ];
                 }
             }
-            echo "<pre>";
-            print_r($cleaned);
-            die;
-            update_post_meta($post_id, 'event_schedules', json_encode($cleaned));
+
+            $cleaned_schedules[] = [
+                'date'  => sanitize_text_field($schedule['date']),
+                'slots' => $cleaned_slots,
+            ];
         }
 
-        // Save post_author and post_nicename
-        $user = wp_get_current_user();
-        wp_update_post([
-            'ID' => $post_id,
-            'post_author' => $user->ID,
-        ]);
-        update_post_meta($post_id, 'post_nicename', $user->user_nicename);
+
+        update_post_meta($post_id, 'event_schedules', $cleaned_schedules);
     }
+
+    // Save post_author and post_nicename
+    $user = wp_get_current_user();
+    wp_update_post([
+        'ID'          => $post_id,
+        'post_author' => $user->ID,
+    ]);
+    update_post_meta($post_id, 'post_nicename', $user->user_nicename);
+}
+
+
+
 
 }
