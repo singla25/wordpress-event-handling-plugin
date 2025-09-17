@@ -145,15 +145,14 @@ class Event_Admin {
     // Avoid autosave
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
 
-    // Save Event Description
-    if (isset($_POST['event_description'])) {
-        // update_post_meta($post_id, 'event_description', sanitize_textarea_field($_POST['event_description']));
-    }
+  
+    // // Save Event Description
+    // if (isset($_POST['event_description'])) {
+    //     // update_post_meta($post_id, 'event_description', sanitize_textarea_field($_POST['event_description']));
+    // }
 
 
-    echo "<pre>";
-    print_r($_POST);
-    die;
+  
 
     // Save Event Schedules
     if (isset($_POST['event_schedules']) && is_array($_POST['event_schedules'])) {
