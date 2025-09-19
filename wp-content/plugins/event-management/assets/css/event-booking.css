@@ -1,0 +1,223 @@
+/* Outer Container */
+.events-archive-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+/* Heading */
+.events-archive-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.events-archive-header h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #222;
+}
+
+/* Event Cards Grid */
+.event-card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.event-card {
+    background: #fafafa;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+}
+
+.event-card-img img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.no-img {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ddd;
+    color: #666;
+    font-size: 1rem;
+}
+
+.event-card-content {
+    padding: 15px;
+    text-align: center;
+}
+
+.event-card-content h3 {
+    font-size: 1.2rem;
+    margin: 0;
+    color: #333;
+}
+
+/* Pagination */
+.events-pagination {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.events-pagination a,
+.events-pagination span {
+    display: inline-block;
+    margin: 0 6px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    background: #f1f1f1;
+    color: #333;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.events-pagination a:hover {
+    background: #28a745;
+    color: #fff;
+}
+
+.events-pagination .current {
+    background: #28a745;
+    color: #fff;
+    font-weight: bold;
+}
+
+
+/* event-booking.css */
+/* Modal Outer */
+.eb-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: auto; /* allows scrolling if viewport is small */
+    padding: 20px;
+}
+
+/* Backdrop */
+.eb-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+}
+
+/* Modal Panel */
+.eb-modal-panel {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 720px;
+    max-height: 90vh; /* max height relative to viewport */
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    overflow-y: auto; /* scroll inside modal */
+}
+
+/* Close Button */
+.eb-close {
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    background: transparent;
+    border: 0;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+/* Rows */
+.eb-row {
+    margin: 10px 0;
+}
+.eb-row label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+/* Buttons */
+.eb-btn {
+    padding: 8px 14px;
+    border: 1px solid #2a9d8f;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+.eb-btn:hover {
+    background: #2a9d8f;
+    color: #fff;
+}
+
+/* Slot Buttons */
+.eb-slot-btn {
+    margin: 6px 6px 0 0;
+    padding: 8px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background: #fafafa;
+    transition: all 0.2s;
+}
+.eb-slot-btn.selected {
+    border-color: #2a9d8f;
+    background: #e6fffb;
+}
+
+/* Attendee Section */
+.eb-attendee {
+    border: 1px dashed #eee;
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+}
+
+/* Attendee Header */
+.eb-attendee h4 {
+    margin: 0 0 8px 0;
+    font-size: 1rem;
+}
+
+/* Inputs inside attendee */
+.eb-attendee input,
+.eb-attendee select {
+    width: 100%;
+    padding: 6px 8px;
+    margin-bottom: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Scrollbar for modal panel */
+.eb-modal-panel::-webkit-scrollbar {
+    width: 8px;
+}
+.eb-modal-panel::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+.eb-modal-panel::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+.eb-modal-panel::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}
+

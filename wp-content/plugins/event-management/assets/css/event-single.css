@@ -1,0 +1,125 @@
+/* 🎯 SINGLE EVENT PAGE STYLES */
+.single-event-container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+/* Row 1: Title */
+.single-event-container .title-row {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.single-event-container .event-title {
+    font-size: 2.4rem;
+    font-weight: bold;
+    color: #222;
+}
+
+/* Row 2: Two Columns (Image + Details) */
+.single-event-container .content-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.single-event-container .image-col {
+    flex: 1;
+    min-width: 350px;
+}
+
+.single-event-container .image-col img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.single-event-container .details-col {
+    flex: 2;
+    min-width: 350px;
+}
+
+.single-event-container .details-col h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.single-event-container .event-description {
+    margin: 15px 0;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* Row 3: Schedule */
+.single-event-container .event-schedules {
+    margin-bottom: 30px;
+}
+
+.single-event-container .schedule-block {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: start;
+    gap: 15px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    border: 1px solid #eee;
+}
+
+.single-event-container .schedule-block h4 {
+    margin: 0;
+    font-size: 1rem;
+    color: #222;
+}
+
+/* Time slots as buttons */
+.single-event-container .time-slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.single-event-container .time-slot {
+    padding: 6px 12px;
+    border: 1px solid #28a745;
+    border-radius: 6px;
+    background: #fff;
+    color: #28a745;
+    font-size: 0.9rem;
+    cursor: default;
+}
+
+/* Persons Column */
+.single-event-container .persons {
+    font-size: 0.95rem;
+    color: #444;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Row 4: Book Button */
+.single-event-container .book-now {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.single-event-container .book-btn {
+    display: inline-block;
+    background: #28a745;
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.single-event-container .book-btn:hover {
+    background: #218838;
+}
